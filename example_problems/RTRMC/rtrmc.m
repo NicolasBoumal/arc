@@ -85,6 +85,7 @@ function optproblem = rtrmc(lrmcproblem, use_precon)
             
         end
         grad = store.grad;
+        store = incrementcounter(store, 'gradhesscalls');
         
     end
 
@@ -112,6 +113,7 @@ function optproblem = rtrmc(lrmcproblem, use_precon)
         hess = hess/k;
         
         store = incrementcounter(store, 'hesscalls');
+        store = incrementcounter(store, 'gradhesscalls');
             
     end
 

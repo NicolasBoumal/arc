@@ -42,11 +42,13 @@ function problem = dominant_invariant_subspace_problem(A, n, p)
         store = prepare(X, store);
         AX = store.AX;
         G = -AX;
+        store = incrementcounter(store, 'gradhesscalls');
     end
     problem.ehess = @ehess;
     function [H, store] = ehess(X, Xdot, store) %#ok<INUSL>
         H = -A*Xdot;
         store = incrementcounter(store, 'hesscalls');
+        store = incrementcounter(store, 'gradhesscalls');
     end
 
     problem.name = sprintf('Dominant invariant subspace, Gr(%d, %d)', n, p);

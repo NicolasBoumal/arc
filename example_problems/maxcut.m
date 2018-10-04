@@ -41,6 +41,7 @@ function problem = maxcut(graphid, p)
     function [G, store] = grad(Y, store)
         store = prepare(Y, store);
         G = store.AY - bsxfun(@times, Y, store.diagAYYt);
+        store = incrementcounter(store, 'gradhesscalls');
     end
 
     % If you want to, you can specify the Hessian as well.
@@ -50,6 +51,7 @@ function problem = maxcut(graphid, p)
         SYdot = A*Ydot - bsxfun(@times, Ydot, store.diagAYYt);
         H = manifold.proj(Y, SYdot);
         store = incrementcounter(store, 'hesscalls');
+        store = incrementcounter(store, 'gradhesscalls');
     end
 
 end

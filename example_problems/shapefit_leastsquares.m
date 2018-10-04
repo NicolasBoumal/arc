@@ -46,11 +46,16 @@ function problem = shapefit_leastsquares(n, d)
     % Since the smooth solvers in Manopt converge to critical points, this
     % means they converge to global optimizers.
     problem.cost  = @(T) 0.5*norm(A(T), 'fro')^2;
-    problem.egrad = @(T) Astar(A(T));
+    problem.egrad = @egrad;
+    function [G, store] = egrad(T, store)
+        G = Astar(A(T)); % this call to A(T) could be stored from that of cost
+        store = incrementcounter(store, 'gradhesscalls');
+    end
     problem.ehess = @ehess;
     function [H, store] = ehess(T, Tdot, store) %#ok<INUSL>
         H = Astar(A(Tdot));
         store = incrementcounter(store, 'hesscalls');
+        store = incrementcounter(store, 'gradhesscalls');
     end
 
     problem.name = sprintf('ShapeFit least-squares for %d points in R^{%d}', n, d);

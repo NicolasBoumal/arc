@@ -54,6 +54,7 @@ function problem = truncated_svd_problem(A, m, n, p)
         AtU = store.AtU;
         g.U = -bsxfun(@times, AV, p:-1:1);
         g.V = -bsxfun(@times, AtU, p:-1:1);
+        store = incrementcounter(store, 'gradhesscalls');
     end
     % Euclidean Hessian of the cost function
     problem.ehess = @ehess;
@@ -65,6 +66,7 @@ function problem = truncated_svd_problem(A, m, n, p)
         h.U = -bsxfun(@times, AVdot, p:-1:1);
         h.V = -bsxfun(@times, AtUdot, p:-1:1);
         store = incrementcounter(store, 'hesscalls');
+        store = incrementcounter(store, 'gradhesscalls');
     end
 
     problem.name = sprintf('Truncated SVD, St(%d, %d) x St(%d, %d)', m, p, n, p);    

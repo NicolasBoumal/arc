@@ -55,11 +55,13 @@ function optiproblem = synchronizeMLE(synchroproblem)
     optiproblem.grad = @gradient;
     function [G, store] = gradient(R, store)
         [G, store] = fungrad(synchroproblem, R, store);
+        store = incrementcounter(store, 'gradhesscalls');
     end
     optiproblem.hess = @hessian;
     function [H, store] = hessian(R, Omega, store)
         [H, store] = funhess(synchroproblem, R, Omega, store);
         store = incrementcounter(store, 'hesscalls');
+        store = incrementcounter(store, 'gradhesscalls');
     end
 
 end

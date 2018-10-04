@@ -55,7 +55,7 @@ nsolvers = numel(solvers_and_options);
                    
 % Add common options to all
 for S = 1 : nsolvers
-    solvers_and_options{S}.statsfun = statsfunhelper(statscounters({'hesscalls'}));
+    solvers_and_options{S}.statsfun = statsfunhelper(statscounters({'hesscalls', 'gradhesscalls'}));
     solvers_and_options{S}.tolgradnorm = 1e-8;
     solvers_and_options{S}.verbosity = 0;
 end
@@ -88,13 +88,13 @@ subplot_rows = 3;
 subplot_cols = 2;
 assert(subplot_rows * subplot_cols >= nproblems, ...
        sprintf('Choose subplot size to fit all %d problems.', nproblems));
-xmetric = {'iter',     'time',     'hesscalls'};
+xmetric = {'iter',     'time',     'gradhesscalls'};
 xscale  = {'linear',   'linear',   'linear'};
 ymetric = {'gradnorm', 'gradnorm', 'gradnorm'};
 yscale  = {'log',      'log',      'log'};
 axisnames.iter = 'Iteration #';
 axisnames.time = 'Time [s]';
-axisnames.hesscalls = '# Hessian-vector products';
+axisnames.gradhesscalls = '# gradient calls and Hessian-vector products';
 axisnames.gradnorm = 'Gradient norm';
 nmetrics = numel(xmetric);
 assert(numel(ymetric) == nmetrics);
