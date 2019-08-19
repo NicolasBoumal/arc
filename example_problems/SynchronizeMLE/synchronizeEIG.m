@@ -53,7 +53,7 @@ function R = synchronizeEIG(problem)
     dd = repmat(D, 1, n).';
     D1 = spdiags(dd(:), 0, n*N, n*N);
     
-    [X E] = eigs(W1, D1, n); %#ok<NASGU>
+    [X, E] = eigs(W1, D1, n); %#ok<ASGLU>
     
     % The eigenvectors of the (W1, D1) pencil, contained in X, do not
     % typically contain rotation matrices, because of the noise. Here, we

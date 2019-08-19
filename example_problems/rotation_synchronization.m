@@ -1,4 +1,4 @@
-function optproblem = rotation_synchronization(n, N, ERp)
+function optproblem = rotation_synchronization(n, N, ERp)     
 
 % Modified from test file for synchronization of rotations using the
 % maximum likelihood algorithm SynchronizeMLE described in
@@ -72,6 +72,8 @@ H = multiprod(Z, Htrue);
 synchroproblem = buildproblem_synchro(n, N, M, I, J, H, kappa1, kappa2, p, A, Ra);
 
 optproblem = synchronizeMLE(synchroproblem);
+
+optproblem.x0 = synchronizeEIGanchored(synchroproblem);
 
 optproblem.name = sprintf('Synchronization of %d rotations in SO(%d)', N, n);
 
