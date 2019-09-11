@@ -44,7 +44,7 @@ function problem = truncated_svd_problem(A, m, n, p)
         store = prepare(X, store);
         U  = X.U;
         AV = store.AV;
-        f  = -(p:-1:1)*diag(U'*AV);
+        f  = -sum(U.*AV, 1)*(p:-1:1)';
     end
     % Euclidean gradient of the cost function
     problem.egrad = @egrad;
